@@ -1,0 +1,3 @@
+[submodule "aastha-portfolio"]
+    path = aastha-portfolio
+    url = https://github.com/yourusername/aastha-portfolio.git
