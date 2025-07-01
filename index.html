@@ -34,7 +34,7 @@
         }
         
         .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0F0F23 0%, #1A1A2E 25%, #16213E 50%, #0F3460 75%, #533483 100%);
             position: relative;
         }
         
@@ -45,7 +45,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
             animation: float 20s ease-in-out infinite;
         }
         
@@ -55,18 +55,18 @@
         }
         
         .glass-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
         
         .neon-glow {
-            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5), 0 0 40px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5), 0 0 40px rgba(139, 92, 246, 0.3), 0 0 60px rgba(139, 92, 246, 0.1);
         }
         
         .text-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #8B5CF6 0%, #06B6D4 50%, #10B981 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -78,7 +78,7 @@
         
         .hover-lift:hover {
             transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 25px 50px -12px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 35px 70px -15px rgba(139, 92, 246, 0.4);
         }
         
         .floating-icons {
@@ -128,7 +128,7 @@
         
         .particle {
             position: absolute;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(139, 92, 246, 0.1);
             border-radius: 50%;
             animation: particleMove 15s linear infinite;
         }
@@ -153,7 +153,7 @@
         }
         
         .skill-bar {
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            background: linear-gradient(90deg, #8B5CF6, #06B6D4, #10B981);
             animation: fillBar 2s ease-out forwards;
             transform-origin: left;
             transform: scaleX(0);
@@ -161,6 +161,36 @@
         
         @keyframes fillBar {
             to { transform: scaleX(1); }
+        }
+        
+        .typing-effect {
+            overflow: hidden;
+            border-right: 3px solid rgba(139, 92, 246, 0.8);
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: rgba(139, 92, 246, 0.8); }
+        }
+        
+        .cyber-grid {
+            background-image: 
+                linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            animation: gridMove 20s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(20px, 20px); }
         }
     </style>
 </head>
@@ -170,7 +200,7 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
         const { motion, AnimatePresence } = window.FramerMotion;
-        const { MailIcon, PhoneIcon, FileDownIcon, ExternalLinkIcon, GitHubIcon, LinkedinIcon, ArrowDownIcon } = window.LucideReact;
+        const { MailIcon, PhoneIcon, FileDownIcon, ExternalLinkIcon, GitHubIcon, LinkedinIcon, ArrowDownIcon, CodeIcon, SparklesIcon, BrainIcon, TrophyIcon } = window.LucideReact;
         
         const ParticleBackground = () => {
             const [particles, setParticles] = useState([]);
@@ -212,7 +242,7 @@
                 whileHover={{ scale: 1.2, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
             >
-                <div className="absolute inset-0 bg-white rounded-full pulse-ring opacity-0 group-hover:opacity-100"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-full pulse-ring opacity-0 group-hover:opacity-100"></div>
                 {children}
             </motion.a>
         );
@@ -220,7 +250,7 @@
         const GlowButton = ({ children, href, variant = "primary", className = "" }) => {
             const baseClasses = "glow-button relative px-8 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center gap-3";
             const variantClasses = variant === "primary" 
-                ? "bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 text-white neon-glow" 
+                ? "bg-gradient-to-r from-purple-600 via-blue-600 to-emerald-600 text-white neon-glow" 
                 : "glass-card text-white border-white/30 hover:border-white/50";
             
             return (
@@ -259,11 +289,11 @@
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
             >
-                {icon && <span className="text-xl">{icon}</span>}
+                {icon}
                 {children}
                 {active && (
                     <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-2xl"
+                        className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-cyan-600/20 rounded-2xl"
                         layoutId="activeTab"
                     />
                 )}
@@ -279,7 +309,7 @@
             >
                 <div className="flex justify-between mb-2">
                     <span className="text-white font-medium">{skill}</span>
-                    <span className="text-white/70">{level}%</span>
+                    <span className="text-purple-300">{level}%</span>
                 </div>
                 <div className="h-3 bg-white/10 rounded-full overflow-hidden">
                     <motion.div
@@ -301,10 +331,10 @@
             }, []);
 
             const tabs = [
-                { id: 'experience', label: 'Experience', icon: '💼' },
-                { id: 'projects', label: 'Projects', icon: '🚀' },
-                { id: 'skills', label: 'Skills', icon: '⚡' },
-                { id: 'activities', label: 'Extracurriculars', icon: '🎯' },
+                { id: 'experience', label: 'Experience', icon: <BrainIcon className="w-5 h-5" /> },
+                { id: 'projects', label: 'Projects', icon: <CodeIcon className="w-5 h-5" /> },
+                { id: 'skills', label: 'Skills', icon: <SparklesIcon className="w-5 h-5" /> },
+                { id: 'activities', label: 'Achievements', icon: <TrophyIcon className="w-5 h-5" /> },
             ];
 
             const experiences = [
@@ -312,76 +342,84 @@
                     title: "Software Engineer Intern",
                     company: "Nationwide Insurance",
                     year: "2025",
-                    description: "Building dashboards in Java, Angular & SQL to improve risk analysis for underwriters.",
-                    tech: ["Java", "Angular", "SQL", "Dashboard Development"]
+                    description: "Building cutting-edge dashboards in Java, Angular & SQL to revolutionize risk analysis for underwriters, enhancing decision-making processes.",
+                    tech: ["Java", "Angular", "SQL", "Dashboard Development"],
+                    gradient: "from-emerald-400 to-teal-400"
                 },
                 {
                     title: "Software Engineer Intern",
                     company: "Nationwide Insurance", 
                     year: "2024",
-                    description: "Streamlined defect logging with FullStory, wrote Java unit tests, and optimized Angular navigation.",
-                    tech: ["FullStory", "Java", "Angular", "Unit Testing"]
+                    description: "Streamlined defect logging with FullStory integration, developed comprehensive Java unit tests, and optimized Angular navigation for enhanced user experience.",
+                    tech: ["FullStory", "Java", "Angular", "Unit Testing"],
+                    gradient: "from-blue-400 to-indigo-400"
                 },
                 {
                     title: "Software Engineer Intern",
                     company: "Axway Inc",
                     year: "2023",
-                    description: "Built React UI components for API management and worked with clients like Novartis and the US Government.",
-                    tech: ["React", "API Management", "UI/UX", "Enterprise Clients"]
+                    description: "Engineered React UI components for enterprise API management platforms, collaborating with high-profile clients including Novartis and the US Government.",
+                    tech: ["React", "API Management", "UI/UX", "Enterprise Clients"],
+                    gradient: "from-purple-400 to-pink-400"
                 },
                 {
                     title: "Technical Intern",
                     company: "Paradise Valley Unified School District",
                     year: "2022",
-                    description: "Built ML models in GCP BigQuery and TensorFlow to analyze educational performance and climate impact.",
-                    tech: ["GCP", "BigQuery", "TensorFlow", "Machine Learning"]
+                    description: "Developed machine learning models using GCP BigQuery and TensorFlow to analyze educational performance metrics and environmental impact assessment.",
+                    tech: ["GCP", "BigQuery", "TensorFlow", "Machine Learning"],
+                    gradient: "from-orange-400 to-red-400"
                 }
             ];
 
             const projects = [
                 {
-                    title: "MedEase: Healthcare Made Easy",
-                    description: "Multilingual chatbot with CDC data + Azure ML + Firebase for secure translation and symptom analysis.",
-                    tech: ["Azure ML", "Firebase", "CDC API", "Natural Language Processing"],
-                    gradient: "from-emerald-400 to-cyan-400"
+                    title: "MedEase: Healthcare Revolution",
+                    description: "Multilingual AI chatbot integrating CDC data with Azure ML and Firebase for secure translation and intelligent symptom analysis.",
+                    tech: ["Azure ML", "Firebase", "CDC API", "NLP"],
+                    gradient: "from-emerald-400 to-cyan-400",
+                    icon: "🏥"
                 },
                 {
-                    title: "FitForm Analyzer",
-                    description: "Python-based posture tool using cosine similarity to provide real-time workout feedback.",
+                    title: "FitForm AI Analyzer",
+                    description: "Advanced Python-based posture analysis tool using cosine similarity algorithms for real-time workout feedback and form correction.",
                     tech: ["Python", "Computer Vision", "Cosine Similarity", "Real-time Analysis"],
-                    gradient: "from-pink-400 to-rose-400"
+                    gradient: "from-pink-400 to-rose-400",
+                    icon: "💪"
                 },
                 {
-                    title: "Racial Bias in Criminal Justice System",
-                    description: "Facial detection model using TensorFlow with mentorship from Brown University.",
+                    title: "Criminal Justice AI Ethics",
+                    description: "Facial detection model using TensorFlow to study racial bias in criminal justice, developed with Brown University mentorship.",
                     tech: ["TensorFlow", "Facial Recognition", "Ethics in AI", "Research"],
-                    gradient: "from-violet-400 to-purple-400"
+                    gradient: "from-violet-400 to-purple-400",
+                    icon: "⚖️"
                 }
             ];
 
             const skills = [
-                { category: "Languages", items: ["Python", "Java", "JavaScript", "C", "SQL"], levels: [95, 90, 85, 80, 85] },
-                { category: "Frameworks", items: ["React", "Angular", "TensorFlow", "Firebase"], levels: [90, 85, 80, 75] },
-                { category: "Cloud & Tools", items: ["GCP", "AWS", "GitHub", "BigQuery"], levels: [85, 75, 95, 80] }
+                { category: "Programming Languages", items: ["Python", "Java", "JavaScript", "C", "SQL"], levels: [95, 90, 85, 80, 85] },
+                { category: "Frameworks & Tools", items: ["React", "Angular", "TensorFlow", "Firebase"], levels: [90, 85, 80, 75] },
+                { category: "Cloud & Platforms", items: ["GCP", "AWS", "GitHub", "BigQuery"], levels: [85, 75, 95, 80] }
             ];
 
             return (
                 <div className="min-h-screen gradient-bg relative">
+                    <div className="cyber-grid absolute inset-0"></div>
                     <ParticleBackground />
                     
                     {/* Hero Section */}
                     <section className="relative min-h-screen flex items-center justify-center px-4">
-                        <div className="text-center max-w-4xl mx-auto">
+                        <div className="text-center max-w-4xl mx-auto z-10">
                             <motion.div
                                 initial={{ scale: 0, rotate: -180 }}
                                 animate={{ scale: 1, rotate: 0 }}
                                 transition={{ duration: 1, type: "spring", bounce: 0.5 }}
                                 className="relative mb-8"
                             >
-                                <div className="w-32 h-32 mx-auto morphing-blob bg-gradient-to-br from-white/20 to-white/5 flex items-center justify-center text-6xl">
+                                <div className="w-40 h-40 mx-auto morphing-blob bg-gradient-to-br from-purple-500/30 to-cyan-500/30 flex items-center justify-center text-7xl backdrop-blur-sm">
                                     👩‍💻
                                 </div>
-                                <div className="absolute inset-0 w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-purple-400/30 to-blue-400/30 blur-xl"></div>
+                                <div className="absolute inset-0 w-40 h-40 mx-auto rounded-full bg-gradient-to-br from-purple-400/30 to-cyan-400/30 blur-xl"></div>
                             </motion.div>
                             
                             <motion.h1
@@ -390,35 +428,35 @@
                                 transition={{ duration: 0.8, delay: 0.2 }}
                                 className="text-7xl md:text-8xl font-black text-white mb-6 tracking-tight"
                             >
-                                Aastha Mittal
+                                <span className="text-gradient">Aastha Mittal</span>
                             </motion.h1>
                             
                             <motion.div
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, delay: 0.4 }}
-                                className="text-2xl md:text-3xl text-white/90 mb-8 font-light"
+                                className="text-2xl md:text-3xl text-white/90 mb-8 font-light typing-effect"
                             >
-                                Software Engineer • AI/ML Enthusiast • Speaker
+                                Software Engineer • AI/ML Enthusiast • Tech Speaker
                             </motion.div>
                             
                             <motion.div
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, delay: 0.6 }}
-                                className="flex justify-center gap-6 mb-12"
+                                className="flex justify-center gap-8 mb-12"
                             >
                                 <SocialIcon href="mailto:aasthami@andrew.cmu.edu" className="text-white/80 hover:text-white text-2xl">
-                                    <MailIcon className="w-8 h-8" />
+                                    <MailIcon className="w-10 h-10" />
                                 </SocialIcon>
                                 <SocialIcon href="tel:+16027069102" className="text-white/80 hover:text-white text-2xl">
-                                    <PhoneIcon className="w-8 h-8" />
+                                    <PhoneIcon className="w-10 h-10" />
                                 </SocialIcon>
                                 <SocialIcon href="https://linkedin.com/in/aastha-mittal-cs" className="text-white/80 hover:text-white text-2xl">
-                                    <LinkedinIcon className="w-8 h-8" />
+                                    <LinkedinIcon className="w-10 h-10" />
                                 </SocialIcon>
                                 <SocialIcon href="https://github.com/aasthami" className="text-white/80 hover:text-white text-2xl">
-                                    <GitHubIcon className="w-8 h-8" />
+                                    <GitHubIcon className="w-10 h-10" />
                                 </SocialIcon>
                             </motion.div>
                             
@@ -490,19 +528,22 @@
                                     >
                                         {experiences.map((exp, i) => (
                                             <GlassCard key={i} delay={i * 0.1}>
-                                                <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                                                    <div>
-                                                        <h3 className="text-2xl font-bold text-white mb-1">{exp.title}</h3>
-                                                        <p className="text-xl text-purple-300">{exp.company}</p>
+                                                <div className="flex flex-col md:flex-row md:items-start justify-between mb-6">
+                                                    <div className="flex-1">
+                                                        <div className={`w-16 h-16 bg-gradient-to-br ${exp.gradient} rounded-2xl mb-4 flex items-center justify-center text-2xl`}>
+                                                            💼
+                                                        </div>
+                                                        <h3 className="text-2xl font-bold text-white mb-2">{exp.title}</h3>
+                                                        <p className="text-xl text-gradient font-semibold">{exp.company}</p>
                                                     </div>
-                                                    <div className="glass-card px-4 py-2 rounded-full text-white font-semibold mt-4 md:mt-0">
+                                                    <div className="glass-card px-6 py-3 rounded-full text-white font-semibold mt-4 md:mt-0 neon-glow">
                                                         {exp.year}
                                                     </div>
                                                 </div>
-                                                <p className="text-white/90 mb-4 text-lg leading-relaxed">{exp.description}</p>
-                                                <div className="flex flex-wrap gap-2">
+                                                <p className="text-white/90 mb-6 text-lg leading-relaxed">{exp.description}</p>
+                                                <div className="flex flex-wrap gap-3">
                                                     {exp.tech.map((tech, j) => (
-                                                        <span key={j} className="px-3 py-1 bg-white/10 rounded-full text-white/90 text-sm">
+                                                        <span key={j} className="px-4 py-2 glass-card rounded-full text-white/90 text-sm font-medium">
                                                             {tech}
                                                         </span>
                                                     ))}
@@ -523,7 +564,9 @@
                                     >
                                         {projects.map((project, i) => (
                                             <GlassCard key={i} delay={i * 0.1} className="group cursor-pointer">
-                                                <div className={`w-full h-32 bg-gradient-to-br ${project.gradient} rounded-2xl mb-6 opacity-80 group-hover:opacity-100 transition-opacity`}></div>
+                                                <div className={`w-full h-32 bg-gradient-to-br ${project.gradient} rounded-2xl mb-6 flex items-center justify-center text-4xl opacity-80 group-hover:opacity-100 transition-opacity`}>
+                                                    {project.icon}
+                                                </div>
                                                 <h3 className="text-xl font-bold text-white mb-3">{project.title}</h3>
                                                 <p className="text-white/90 mb-4 leading-relaxed">{project.description}</p>
                                                 <div className="flex flex-wrap gap-2">
@@ -549,7 +592,7 @@
                                     >
                                         {skills.map((skillCategory, i) => (
                                             <GlassCard key={i} delay={i * 0.1}>
-                                                <h3 className="text-2xl font-bold text-white mb-6">{skillCategory.category}</h3>
+                                                <h3 className="text-2xl font-bold text-gradient mb-6">{skillCategory.category}</h3>
                                                 {skillCategory.items.map((skill, j) => (
                                                     <SkillBar 
                                                         key={j} 
@@ -570,30 +613,15 @@
                                         animate={{ opacity: 1, x: 0 }}
                                         exit={{ opacity: 0, x: -50 }}
                                         transition={{ duration: 0.5 }}
-                                        className="grid gap-6"
+                                        className="grid md:grid-cols-2 gap-6"
                                     >
                                         {[
-                                            "🏆 Jane Street Discovery Day (NCWIT Winner)",
-                                            "📊 CMU Quant Club – Member", 
-                                            "🗺️ CMU ScottyLabs (CMU Maps) – Developer",
-                                            "🕉️ CMU Hindu Yuva – Outreach Head",
-                                            "🎤 Speaker – Talks on Women in Tech and EdTech since 2020"
+                                            { text: "🏆 Jane Street Discovery Day (NCWIT Winner)", icon: "🎯" },
+                                            { text: "📊 CMU Quant Club – Active Member", icon: "📈" }, 
+                                            { text: "🗺️ CMU ScottyLabs (CMU Maps) – Lead Developer", icon: "💻" },
+                                            { text: "🕉️ CMU Hindu Yuva – Outreach Head", icon: "🌟" },
+                                            { text: "🎤 Tech Speaker – Women in Tech & EdTech since 2020", icon: "🚀" }
                                         ].map((activity, i) => (
-                                            <GlassCard key={i} delay={i * 0.1}>
-                                                <p className="text-white text-lg">{activity}</p>
-                                            </GlassCard>
-                                        ))}
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>
-                    </section>
-                </div>
-            );
-        };
-
-        // Render the app
-        ReactDOM.render(<PortfolioSite />, document.getElementById('root'));
-    </script>
-</body>
-</html>
+                                            <GlassCard key={i} delay={i * 0.1} className="group hover:neon-glow">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="text-4xl group-hover:scale-110 transition-transform duration-300">
