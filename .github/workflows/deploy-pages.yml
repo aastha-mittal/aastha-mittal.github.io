@@ -1,5 +1,6 @@
-# Builds the Vite app and deploys dist/ to GitHub Pages.
-# After the first run: Repo → Settings → Pages → Source: GitHub Actions (not “branch”).
+# Builds the Vite app and pushes dist/ to the gh-pages branch.
+# GitHub Pages must publish from branch "gh-pages" / (root) — NOT from "main"
+# (main has dev index.html that points at /src/main.jsx and will show a blank page).
 name: Deploy to GitHub Pages
 
 on:
@@ -7,37 +8,32 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: deploy-gh-pages
+  cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
           cache: npm
+
       - run: npm ci
       - run: npm run build
+
       - name: SPA fallback for client-side routes
         run: cp dist/index.html dist/404.html
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Push dist to gh-pages branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: dist
+          clean: true
