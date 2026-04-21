@@ -3,6 +3,13 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Radio, Server, Zap } from "lucide-react";
 import { BASE, LINKS } from "../data/constants";
+import TypewriterLine from "../components/TypewriterLine";
+
+const HERO_TAGLINE_PHRASES = [
+  "CMU · CS · Systems / ML",
+  "Agentic AI · systems · reliability",
+  "What ships · what stays up · what we measure",
+];
 
 const HERO_PHOTO_SOURCES = [
   `${BASE}AasthaPic.JPG`,
@@ -88,7 +95,10 @@ export default function DashboardHome() {
               <p className="dash-kicker">AT A GLANCE</p>
               <h1 className="dash-title">
                 Aastha Mittal
-                <span className="dash-title-tag">CMU · CS · Systems / ML</span>
+                <span className="sr-only">
+                  — CMU computer science; systems, machine learning, agentic AI, and reliability.
+                </span>
+                <TypewriterLine phrases={HERO_TAGLINE_PHRASES} className="dash-title-tag dash-typewriter" />
               </h1>
               <p className="dash-blurb">
                 I&apos;m an ML/AI enthusiast, deep into agentic AI and where it meets systems. I care about what stays up under load, what ships, and
