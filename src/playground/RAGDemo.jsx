@@ -55,7 +55,7 @@ function retrieve(query, corpus, topK = 3) {
 
 function synthesizeAnswer(query, chunks) {
   if (chunks.length === 0) {
-    return "No strong matches in the demo corpus — try terms like Kafka, RAG, Nationwide, FitForm, or teaching.";
+    return "No strong matches in the demo corpus — try terms like IBM, Terraform, Kafka, Raft, OPA, Nationwide, or transformer.";
   }
   const body = chunks
     .map((c, i) => `(${i + 1}) ${c.title}\n${c.text.slice(0, 220)}${c.text.length > 220 ? "…" : ""}`)
@@ -98,7 +98,7 @@ export default function RAGDemo() {
   return (
     <div className="play-rag">
       <p className="play-rag-intro">
-        Ask a question about Aastha&apos;s work (Kafka, RAG, insurance scale, FitForm, teaching…). The pipeline below is simulated in-browser:
+        Ask a question about Aastha&apos;s work (IBM, Terraform, Kafka, Raft, OPA, Nationwide, transformer…). The pipeline below is simulated in-browser:
         lexical retrieval over a fixed corpus, then a templated &quot;answer&quot; — useful to show how RAG <em>feels</em>, not to replace production
         embeddings.
       </p>

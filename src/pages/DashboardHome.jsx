@@ -6,12 +6,13 @@ import { BASE, LINKS } from "../data/constants";
 import TypewriterLine from "../components/TypewriterLine";
 
 const HERO_TAGLINE_PHRASES = [
-  "CMU · CS · Systems / ML",
-  "Agentic AI · systems · reliability",
-  "What ships · what stays up · what we measure",
+  "CMU · CS · Expected May 2028",
+  "Infrastructure · security · systems",
+  "Go · Python · C++ · Java",
 ];
 
 const HERO_PHOTO_SOURCES = [
+  `${BASE}aastha-headshot.jpg`,
   `${BASE}AasthaPic.JPG`,
   `${BASE}aastha-pic.jpg`,
   `${BASE}aastha-pic.jpeg`,
@@ -19,6 +20,8 @@ const HERO_PHOTO_SOURCES = [
   `${BASE}aastha-pic.webp`,
   `${BASE}aastha-pic.svg`,
 ];
+
+const STACK = ["Go", "Python", "C++", "Java", "TypeScript", "Kafka", "PostgreSQL", "Terraform", "OPA", "PyTorch"];
 
 function Sparkline() {
   const [pts, setPts] = useState(() => Array.from({ length: 24 }, () => 40 + Math.random() * 30));
@@ -43,8 +46,8 @@ function Sparkline() {
     <svg className="dash-spark" viewBox="0 0 280 64" aria-hidden>
       <defs>
         <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="rgba(15,118,110,0.22)" />
-          <stop offset="100%" stopColor="rgba(15,118,110,0)" />
+          <stop offset="0%" stopColor="rgba(14,116,144,0.28)" />
+          <stop offset="100%" stopColor="rgba(14,116,144,0)" />
         </linearGradient>
       </defs>
       <path d={`${d} L280,64 L0,64 Z`} fill="url(#sg)" />
@@ -54,16 +57,16 @@ function Sparkline() {
 }
 
 const SERVICES = [
-  { id: "api", name: "api-gateway", status: "healthy", region: "us-east", icon: Server, detail: "REST + auth patterns" },
-  { id: "doc", name: "document-ai", status: "active", region: "remote", icon: Zap, detail: "LLM + review workflows" },
+  { id: "infra", name: "agentic-infra", status: "healthy", region: "durham", icon: Server, detail: "Go · Terraform · OPA" },
+  { id: "doc", name: "document-ai", status: "active", region: "remote", icon: Zap, detail: "LLM + FAISS review" },
   { id: "pipe", name: "ingest-pipeline", status: "streaming", region: "kafka", icon: Radio, detail: "async document load" },
 ];
 
 const LOG_LINES = [
-  "[metrics] batch_latency_p99=182ms",
-  "[rag] retrieval_precision@3=0.84 (eval set)",
-  "[deploy] jenkins #4824 → prod ✓",
-  "[sproutcards] deck_generated cards=8 latency_ms=12",
+  "[ibm] opa_rego verified · red_team_pass",
+  "[time2cash] kafka · 50k docs/day · 99.2%",
+  "[raft] election_ok · recovery_path_tested",
+  "[lob] price_priority · partial_fill_ok",
 ];
 
 export default function DashboardHome() {
@@ -88,7 +91,7 @@ export default function DashboardHome() {
 
   return (
     <div className="dash">
-      <section className="dash-hero">
+      <section className="dash-top">
         <motion.div className="dash-hero-inner" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
           <div className="dash-hero-row">
             <div className="dash-hero-copy">
@@ -101,10 +104,8 @@ export default function DashboardHome() {
                 <TypewriterLine phrases={HERO_TAGLINE_PHRASES} className="dash-title-tag dash-typewriter" />
               </h1>
               <p className="dash-blurb">
-                I&apos;m an ML/AI enthusiast, deep into agentic AI and where it meets systems. I care about what stays up under load, what ships, and
-                what gets measured. This page is a playful control panel for that story: numbers tie back to real roles, and the{" "}
-                <Link to="/playground">Playground</Link> has small demos you can actually run (retrieval over a tiny corpus, and SproutCards from
-                notes). Wander into <Link to="/projects">projects</Link> when you want the long version.
+                Software engineer at CMU building systems that stay correct under load — from agentic infrastructure at IBM Research / HashiCorp
+                R&amp;D to document-scale microservices at Time2Cash.
               </p>
               <div className="dash-hero-cta">
                 <Link to="/projects" className="dash-btn dash-btn-primary">
@@ -119,20 +120,53 @@ export default function DashboardHome() {
               </div>
             </div>
             <figure className="dash-hero-photo-wrap">
-              <img
-                className="dash-hero-photo"
-                src={HERO_PHOTO_SOURCES[photoSrcIndex]}
-                width={268}
-                height={313}
-                alt="Aastha Mittal"
-                decoding="async"
-                onError={() => {
-                  setPhotoSrcIndex((i) => Math.min(i + 1, HERO_PHOTO_SOURCES.length - 1));
-                }}
-              />
+              <div className="dash-hero-photo-frame">
+                <img
+                  className="dash-hero-photo"
+                  src={HERO_PHOTO_SOURCES[photoSrcIndex]}
+                  width={220}
+                  height={264}
+                  alt="Aastha Mittal"
+                  decoding="async"
+                  onError={() => {
+                    setPhotoSrcIndex((i) => Math.min(i + 1, HERO_PHOTO_SOURCES.length - 1));
+                  }}
+                />
+              </div>
             </figure>
           </div>
         </motion.div>
+
+        <motion.aside
+          className="dash-card dash-side-card"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.08 }}
+        >
+          <p className="dash-kicker">NOW</p>
+          <h2 className="dash-side-title">Building &amp; teaching</h2>
+          <ul className="dash-now-list">
+            <li>
+              <span className="dash-now-label">School</span>
+              <span>CMU B.S. CS · May 2028</span>
+            </li>
+            <li>
+              <span className="dash-now-label">Role</span>
+              <span>TA · 15-121 Data Structures</span>
+            </li>
+            <li>
+              <span className="dash-now-label">Recent</span>
+              <span>IBM Research / HashiCorp R&amp;D</span>
+            </li>
+          </ul>
+          <div className="dash-stack">
+            {STACK.map((skill) => (
+              <span key={skill} className="dash-stack-chip">
+                {skill}
+              </span>
+            ))}
+          </div>
+        </motion.aside>
       </section>
 
       <section className="dash-grid">

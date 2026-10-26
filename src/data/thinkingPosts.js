@@ -1,5 +1,26 @@
 export const THINKING_POSTS = [
   {
+    slug: "verify-before-apply",
+    title: "Verify before apply",
+    excerpt: "What I learned putting a gate between LLM-generated Terraform and real infrastructure.",
+    date: "2026",
+    readTime: "4 min",
+    sections: [
+      {
+        heading: "Context",
+        body: `Natural-language → Terraform is compelling until a fluent but wrong Vault grant hits a cluster. At IBM / HashiCorp R&D the failure mode that mattered was unsafe execution, not slow tickets.`,
+      },
+      {
+        heading: "Decision",
+        body: `Go workflows produced Terraform and Vault configs; an OPA/Rego verification layer with adversarial cases caught incorrect permissions before apply. A multi-agent red-team loop made failure modes something you investigate on purpose.`,
+      },
+      {
+        heading: "Tradeoff",
+        body: `You give up some “wow, it just deployed” demos. You gain an audit story and a place to fail closed. Agentic infra only ships if the gate is real.`,
+      },
+    ],
+  },
+  {
     slug: "kafka-vs-bigger-box",
     title: "When queues beat bigger boxes",
     excerpt: "Why we leaned on Kafka for document pipelines instead of only scaling the API tier.",
